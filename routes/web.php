@@ -206,6 +206,9 @@ Route::get('/home/updateCount','Home\CartController@updateCount')->name('updateC
 Route::get('/home/updateCheck','Home\CartController@updateCheck');
 
 
+// 支付
+Route::post('/home/pay','Home\AlipayController@pay')->name('alipay');
+
 // ---------------支付结算
 Route::get('/home/pay_show','Home\PayController@pay_show')->name('pay_show');
 // ---------------提交订单
@@ -240,8 +243,17 @@ Route::get('/home/footmark','Home\HomeController@footmark')->name('footmark');
 
 // 个人信息
 Route::get('/home/info','Home\HomeController@info')->name('info');
+
+
+
+
 // 地址管理
 Route::get('/home/address','Home\HomeController@address')->name('address');
+//              添加新地址
+Route::post('/home/add_address','Home\HomeController@add_address')->name('add_address');
+
+
+
 // 地址管理
 Route::get('/home/safe','Home\HomeController@safe')->name('safe');
 

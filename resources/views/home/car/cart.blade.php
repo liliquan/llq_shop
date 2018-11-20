@@ -459,7 +459,7 @@
                     this.carts[k].goods_count--
                     updateCart(this.carts[k].goods_count,this.carts[k].id)
                 }
-            },ssh-keygen -t rsa -C '765210436@qq.com'
+            },
             del:function(k){
                 del(this.carts[k].id)
                 this.carts.splice(k,1) 
@@ -471,28 +471,22 @@
         },
         computed:{
             totalPrice:function(){
-
                 var num = 0;
-
                 for(let i=0;i<this.carts.length;i++){
                     if(this.carts[i].checked == 'true' || this.carts[i].checked == true){
                         num += this.carts[i].goods_count * this.carts[i].sku_price
                     }
                 }
-
                 return num;
             }
         }
-        
     })
-    function updateCart(num,id){
-                
+    function updateCart(num,id){       
         $.ajax({
             type:"GET",
             data:{count:num,id:id},
             url:"/home/updateCount",
             success:function(data){
-                
             }
         })
     }
@@ -516,14 +510,5 @@
             }
         })
     }
-
-
-    
-
-
-    // 
-
-
-
 
 </script>

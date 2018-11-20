@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-    <title>设置-个人信息</title>
+    <title>待评价</title>
     <link rel="icon" href="/assets/img/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="/css/webbase.css" />
@@ -60,7 +60,13 @@
                         </div>
                         <div class="yui3-u Center searchArea">
                             <div class="search">
-                                
+                                <form action="" class="sui-form form-inline">
+                                    <!--searchAutoComplete-->
+                                    <div class="input-append">
+                                        <input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
+                                        <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="hotwords">
                                 <ul>
@@ -136,9 +142,6 @@
     <script type="text/javascript" src="/js/plugins/sui/sui.min.js"></script>
     <script type="text/javascript" src="/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
     <script type="text/javascript" src="/js/widget/nav.js"></script>
-    <!-- <script type="text/javascript" src="/pages/userInfo/distpicker.data.js"></script>
-    <script type="text/javascript" src="/pages/userInfo/distpicker.js"></script>
-    <script type="text/javascript" src="/pages/userInfo/main.js"></script> -->
 </body>
 <!--header-->
 <div id="account">
@@ -181,91 +184,241 @@
                 </div>
             </div>
             <!--右侧主内容-->
-            <div class="yui3-u-5-6">
-                <div class="body userAddress">
-                    <div class="address-title">
-                        <span class="title">地址管理</span>
-                        <a data-toggle="modal" data-target=".edit" data-keyboard="false" class="sui-btn  btn-info add-new">添加新地址</a>
-                        <span class="clearfix"></span>
-                    </div>
-                    @if($errors->any())
-                        <ul>
-                            @foreach($errors->all() as $e)
-                                <li>{{ $e }}</li>
-                            @endforeach 
-                        </ul>
-                    @endif
-                    <div class="address-detail">
-                        <table class="sui-table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>姓名</th>
-                                    <th>地址</th>
-                                    <th>联系电话</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($data as $v)
-                                <tr>
-                                    <td>{{ $v->name }}</td>
-                                    <td>{{ $v->address }}</td>
-                                    <td>{{ $v->phone }}</td>
-                                    <td>
-                                        <a href="#">编辑</a>
-                                        <a href="#">删除</a>
-                                        <a href="#">设为默认</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                            </tbody>
+            <div class="yui3-u-5-6 order-pay">
+                <div class="body">
+                    <div class="table-title">
+                        <table class="sui-table  order-table">
+                            <tr>
+                                <thead>
+                                    <th width="35%">宝贝</th>
+                                    <th width="5%">单价</th>
+                                    <th width="5%">数量</th>
+                                    <th width="8%">商品操作</th>
+                                    <th width="10%">实付款</th>
+                                    <th width="10%">交易状态</th>
+                                    <th width="10%">交易操作</th>
+                                </thead>
+                            </tr>
                         </table>
                     </div>
-                    
-                    <!--新增地址弹出层-->
-                    <div tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade edit" style="width:580px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×</button>
-                                    <h4 id="myModalLabel" class="modal-title">新增地址</h4>
-                                </div>
-                                
-                                <form action="{{route('add_address')}}" method="post">
-                                @csrf
-                                    <div class="modal-body">
-                                        <div class="control-group">
-                                            <label class="control-label">收货人：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label">所在地区：</label>
-                                            <div class="controls">
-                                                <div data-toggle="distpicker">
-                                                    <input type="text" name="address">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label">联系电话：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium" name="phone">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="submit"  class="sui-btn btn-primary btn-large" value="确定">
-                                        <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
-                                    </div>
-                                </form>
+                    <div class="order-detail">
+                        <div class="orders">
+                            <div class="choose-order">
+                                <div class="sui-pagination pagination-large top-pages">
+                                    <ul>
+                                        <li class="prev disabled"><a href="#">上一页</a></li>
 
+                                        <li class="next"><a href="#">下一页</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--order1-->
+                            <div class="choose-title">
+                                <label data-toggle="checkbox" class="checkbox-pretty ">
+                                    <input type="checkbox" checked="checked"><span>2017-02-11
+                                        11:59　订单编号：7867473872181848 店铺：哇哈哈 <a>和我联系</a></span>
+                                </label>
+                                <a class="sui-btn btn-info share-btn">删除订单</a> <a class="sui-btn btn-info share-btn">分享</a>
+                            </div>
+                            <table class="sui-table table-bordered order-datatable">
+                                <tbody>
+                                    <tr>
+                                        <td width="35%">
+                                            <div class="typographic"><img src="/img/goods.png" />
+                                                <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
+                                                <span class="guige">规格：温泉喷雾150ml</span>
+                                            </div>
+                                        </td>
+                                        <td width="5%" class="center">
+                                            <ul class="unstyled">
+                                                <li class="o-price">¥599.00</li>
+                                                <li>¥299.00</li>
+                                            </ul>
+                                        </td>
+                                        <td width="5%" class="center">1</td>
+                                        <td width="8%" class="center">
+                                            <ul class="unstyled">
+                                                <li><a>申请售后</a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>¥299.00</li>
+                                                <li>（含运费：￥0.00）</li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>交易成功</li>
+                                                <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li><a href="#" class="sui-btn btn-info">评价</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!--order2-->
+                            <div class="choose-title">
+                                <label data-toggle="checkbox" class="checkbox-pretty ">
+                                    <input type="checkbox" checked="checked"><span>2017-02-11
+                                        11:59　订单编号：7867473872181848 店铺：哇哈哈 <a>和我联系</a></span>
+                                </label>
+                                <a class="sui-btn btn-info share-btn">分享</a>
+                            </div>
+                            <table class="sui-table table-bordered order-datatable">
+                                <tbody>
+                                    <tr>
+                                        <td width="35%">
+                                            <div class="typographic"><img src="/img/goods.png" />
+                                                <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
+                                                <span class="guige">规格：温泉喷雾150ml</span>
+                                            </div>
+                                        </td>
+                                        <td width="5%" class="center">
+                                            <ul class="unstyled">
+                                                <li class="o-price">¥599.00</li>
+                                                <li>¥299.00</li>
+                                            </ul>
+                                        </td>
+                                        <td width="5%" class="center">1</td>
+                                        <td width="8%" class="center">
+                                            <ul class="unstyled">
+                                                <li><a>申请售后</a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>¥299.00</li>
+                                                <li>（含运费：￥0.00）</li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>交易成功</li>
+                                                <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li><a href="#" class="sui-btn btn-info">评价</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="choose-order">
+
+                            <div class="sui-pagination pagination-large top-pages">
+                                <ul>
+                                    <li class="prev disabled"><a href="#">«上一页</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li class="dotted"><span>...</span></li>
+                                    <li class="next"><a href="#">下一页»</a></li>
+                                </ul>
+                                <div><span>共10页&nbsp;</span><span>
+                                        到
+                                        <input type="text" class="page-num"><button class="page-confirm" onclick="alert(1)">确定</button>
+                                        页</span></div>
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
                     </div>
 
+                    <div class="like-title">
+                        <div class="mt">
+                            <span class="fl"><strong>热卖单品</strong></span>
+                        </div>
+                    </div>
+                    <div class="like-list">
+                        <ul class="yui3-g">
+                            <li class="yui3-u-1-4">
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/itemlike01.png" />
+                                    </div>
+                                    <div class="attr">
+                                        <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>3699.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="commit">
+                                        <i class="command">已有6人评价</i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="yui3-u-1-4">
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/itemlike02.png" />
+                                    </div>
+                                    <div class="attr">
+                                        <em>Apple苹果iPhone 6s/6s Plus 16G 64G 128G</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>4388.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="commit">
+                                        <i class="command">已有700人评价</i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="yui3-u-1-4">
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/itemlike03.png" />
+                                    </div>
+                                    <div class="attr">
+                                        <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>4088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="commit">
+                                        <i class="command">已有700人评价</i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="yui3-u-1-4">
+                                <div class="list-wrap">
+                                    <div class="p-img">
+                                        <img src="/img/_/itemlike04.png" />
+                                    </div>
+                                    <div class="attr">
+                                        <em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+                                    </div>
+                                    <div class="price">
+                                        <strong>
+                                            <em>¥</em>
+                                            <i>4088.00</i>
+                                        </strong>
+                                    </div>
+                                    <div class="commit">
+                                        <i class="command">已有700人评价</i>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -404,8 +557,6 @@
     </div>
 </div>
 <!--页面底部END-->
-
-
 
 undefined
 

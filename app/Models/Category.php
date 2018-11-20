@@ -11,7 +11,7 @@ class Category extends Model
     protected $table = 'goods_class';
     // 设置允许接收的字段
     protected $fillable = ['class_name','parent_id','path'];
-
+    
     public function getCat()
     {
         $data = DB::table('goods_class')->select('*',DB::raw("CONCAT(path,id,'-')"))

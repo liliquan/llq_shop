@@ -4,6 +4,8 @@ namespace App\Http\Controllers\home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Address;
+use DB;
 
 class HomeController extends Controller
 {
@@ -59,7 +61,38 @@ class HomeController extends Controller
     // 地址管理
     public function address()
     {
-        return view('home.home.home-setting-address');
+        $id = session('id');
+        $data = DB::table('user_address')
+                            ->where('user_id','=',$id)
+                            ->select('*')->get();
+        // dd($data);
+        return view('home.home.home-setting-address',['data'=>$data]);
+    }
+
+    // 添加新地址
+    public function add_address(Request $req)
+    {
+        $req->validate([
+            'name'=>'required',
+            'address'=>'required|min:10',
+            'phone'=>'required|min:11|max:11',
+        ],[
+            'name.required'=>'收货人不能为空',
+            'address.required'=>'地址不能为空',
+            'address.min'=>'请输入正确的地址',
+            'phone.required'=>'收货人电话不能为空',
+            'phone.min'=>'请输入正确的手机号',
+            'phone.max'=>'请输入正确的手机号',
+        ]);
+
+        $stmt = DB::table('user_address')->insert([
+            'name'=>$_POST['name'],
+            'address'=>$_POST['address'],
+            'phone'=>$_POST['phone'],
+            'user_id'=>session('id')
+        ]);
+        return back();
+         
     }
 
     // 待评价
